@@ -31,6 +31,7 @@ namespace MarkOS
         {
             getInput();
         }
+
         public static void getInput()
         {
             Console.Write(path);
@@ -50,60 +51,64 @@ namespace MarkOS
 
         private void Inital()
         {
-            Console.BackgroundColor = (ConsoleColor)Color.Green;
-            Console.WriteLine("Uruchamianie systemu plikow");
+            mesege((ConsoleColor)Color.Green, "Uruchamianie systemu plikow");
             try
             {
                 Delay(2000);
                 this.FileSystem = new CosmosVFS();
                 Sys.FileSystem.VFS.VFSManager.RegisterVFS(this.FileSystem);
-                Console.WriteLine("System plikow uruchominy");
+                mesege((ConsoleColor)Color.Green, "System plikow uruchominy");
             }
             catch (Exception ex)
             {
-                Console.BackgroundColor = (ConsoleColor)Color.Red;
-                Console.WriteLine("Nie udalo sie uruchomic systemu plikow");
+                mesege((ConsoleColor)Color.Red, "Nie udalo sie uruchomic systemu plikow");
                 Console.WriteLine("Reboot systemu za 10 sekund");
                 Delay(10000);
                 Sys.Power.Reboot();
 
             }
 
-            Console.WriteLine("Uruchamianie komend");
+            mesege((ConsoleColor)Color.Green, "Uruchamianie komend");
             try
             {
                 Delay(2000);
                 menadzer = new MenadzerKomend();
-                Console.WriteLine("Komendy uruchomione");
+                mesege((ConsoleColor)Color.Green, "Komendy uruchomione");
             }
             catch(Exception ex)
             {
-                Console.BackgroundColor = (ConsoleColor)Color.Red;
-                Console.WriteLine("Nie udalo sie uruchomic komend");
+                mesege((ConsoleColor)Color.Red, "Nie udalo sie uruchomic komend");
                 Console.WriteLine("Reboot systemu za 10 sekund");
                 Delay(10000);
                 Sys.Power.Reboot();
             }
             
-            Console.WriteLine("Uruchamianie debugera");
+            mesege((ConsoleColor)Color.Green, "Uruchamianie debugera");
             try
             {
                 Delay(2000);
                 Runner.Initialize();
-                Console.WriteLine("Debuger uruchomiony");
+                mesege((ConsoleColor)Color.Green, "Debuger uruchomiony");
             }
             catch(Exception ex)
             {
-                Console.BackgroundColor = (ConsoleColor)Color.Red;
-                Console.WriteLine("Nie udalo sie uruchomic debugera");
+                mesege((ConsoleColor)Color.Red, "Nie udalo sie uruchomic debugera");
                 Console.WriteLine("Reboot systemu za 10 sekund");
                 Delay(10000);
                 Sys.Power.Reboot();
             }
-            Console.BackgroundColor = (ConsoleColor)Color.Black;
             
             this.login = new login(menadzer, user);
             login.run();
+        }
+
+        private void mesege(ConsoleColor kolor, string v)
+        {
+            Console.Write("[");
+            Console.BackgroundColor = kolor;
+            Console.Write("    "+v+"    ");
+            Console.BackgroundColor = (ConsoleColor)Color.Black;
+            Console.WriteLine("]");
         }
 
         private static void zmianaFolderu(string input, string odpowiedz)

@@ -423,6 +423,7 @@ namespace MarkOS.Komendy
             return "";
         }
     }
+
     public class Reset : Komendy
     {
         public Reset(String name) : base(name) { }
@@ -436,4 +437,5 @@ namespace MarkOS.Komendy
             return "";
         }
     }
+
 }
